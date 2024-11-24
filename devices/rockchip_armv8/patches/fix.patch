@@ -1,0 +1,27 @@
+From 9b097cd41615b93957d9ba56efa21e1a21859c6d Mon Sep 17 00:00:00 2001
+From: kiddin9 <48883331+kiddin9@users.noreply.github.com>
+Date: Mon, 25 Nov 2024 05:57:42 +0800
+Subject: [PATCH] Create fix-uninitialized.patch
+
+---
+ .../boot/uboot-rk35xx/patches/fix-uninitialized.patch | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+ create mode 100644 package/boot/uboot-rk35xx/patches/fix-uninitialized.patch
+
+diff --git a/package/boot/uboot-rk35xx/patches/fix-uninitialized.patch b/package/boot/uboot-rk35xx/patches/fix-uninitialized.patch
+new file mode 100644
+index 00000000000000..6eef33de5ed228
+--- /dev/null
++++ b/package/boot/uboot-rk35xx/patches/fix-uninitialized.patch
+@@ -0,0 +1,11 @@
++--- a/common/edid.c
+++++ b/common/edid.c
++@@ -3579,7 +3579,7 @@ int add_cea_modes(struct hdmi_edid_data *data, struct edid *edid)
++ {
++ 	const u8 *cea = drm_find_cea_extension(edid);
++ 	const u8 *db, *hdmi = NULL, *video = NULL;
++-	u8 dbl, hdmi_len, video_len = 0;
+++	u8 dbl, hdmi_len = 0, video_len = 0;
++ 	int modes = 0;
++ 
++ 	if (cea && cea_revision(cea) >= 3) {
