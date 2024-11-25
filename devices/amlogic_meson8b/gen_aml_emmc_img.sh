@@ -13,9 +13,9 @@ ROOTFS_IMAGE=$3
 
 # 下载并准备工具
 ver="v0.3.1"
-curl -L -o ./AmlImg https://github.com/hzyitc/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
+[ -f AmlImg ] || curl -L -o ./AmlImg https://github.com/hzyitc/AmlImg/releases/download/$ver/AmlImg_${ver}_linux_amd64
 chmod +x ./AmlImg
-curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
+[ -f uboot.img ] || curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
 ./AmlImg unpack ./uboot.img burn/
 
 # 转换镜像格式
